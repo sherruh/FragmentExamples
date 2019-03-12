@@ -6,41 +6,51 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/task_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Task title"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/task_description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Description"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/task_image_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Image"/>
+
+    </android.support.design.widget.TextInputLayout>
+
     <TextView
-        android:id="@+id/task_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Task title:"
-        android:textSize="40sp" />
+        android:id="@+id/task_end_date_text"
+        android:text="2019.03.12"/>
 
-    <EditText
-        android:id="@+id/task_title_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-
-    <TextView
-        android:id="@+id/task_description_text_view"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description:"
-        android:textSize="40sp" />
-
-    <EditText
-        android:id="@+id/task_description_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-
-    <TextView
-        android:id="@+id/task_image_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Image:"
-        android:textSize="40sp" />
-
-    <EditText
-        android:id="@+id/task_image_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:id="@+id/task_end_date_pick"
+        android:text="Pick end date"/>
 
     <Button
         android:id="@+id/task_done_btn"

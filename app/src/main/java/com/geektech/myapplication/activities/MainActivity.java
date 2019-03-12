@@ -3,6 +3,7 @@ package com.geektech.myapplication.activities;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -35,6 +36,10 @@ public class MainActivity extends FragmentActivity implements IOnAddNewTask, IOn
     AddNewTaskFragment addNewTaskFragment;
     TaskDetailsFragment taskDetailsFragment;
 
+    final String addNewTaskTag="add_new_task";
+    final String taskDetailTag="task_details";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,18 +58,14 @@ public class MainActivity extends FragmentActivity implements IOnAddNewTask, IOn
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         addNewTaskFragment = AddNewTaskFragment.instance(taskId);
         fragmentTransaction.hide(taskListFragment);
-        fragmentTransaction.add(R.id.fragment_container, addNewTaskFragment);
+        fragmentTransaction.add(R.id.fragment_container, addNewTaskFragment,addNewTaskTag);
         fragmentTransaction.commit();
     }
 
     @Override
     public void onTaskCreated(Task task) {
         taskListFragment.AddNewTask(task);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.remove(addNewTaskFragment);
-        fragmentTransaction.show(taskListFragment);
-        fragmentTransaction.commit();
+        removeFragment(addNewTaskFragment);
     }
 
     @Override
@@ -73,15 +74,33 @@ public class MainActivity extends FragmentActivity implements IOnAddNewTask, IOn
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         taskDetailsFragment = TaskDetailsFragment.instance(task);
         fragmentTransaction.hide(taskListFragment);
-        fragmentTransaction.add(R.id.fragment_container, taskDetailsFragment);
+        fragmentTransaction.add(R.id.fragment_container, taskDetailsFragment,taskDetailTag);
         fragmentTransaction.commit();
     }
 
     @Override
     public void onCloseDetails() {
+        removeFragment(taskDetailsFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AddNewTaskFragment addNewTaskFragment=(AddNewTaskFragment) getSupportFragmentManager().findFragmentByTag(addNewTaskTag);
+        TaskDetailsFragment taskDetailsFragment=(TaskDetailsFragment)getSupportFragmentManager().findFragmentByTag(taskDetailTag);
+
+        if(addNewTaskFragment!=null){
+            removeFragment(addNewTaskFragment);
+        }else if(taskDetailsFragment!=null){
+            removeFragment(taskDetailsFragment);
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    public void removeFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.remove(taskDetailsFragment);
+        fragmentTransaction.remove(fragment);
         fragmentTransaction.show(taskListFragment);
         fragmentTransaction.commit();
     }
